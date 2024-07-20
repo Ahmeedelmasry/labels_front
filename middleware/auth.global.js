@@ -14,10 +14,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       authStore().decodeToken(token.value);
     }
     if (to.name == "signin") {
-      return navigateTo({ name: "labels" });
+      return navigateTo({ name: "factories" });
     }
   }
   if (to.name == "index") {
-    return navigateTo({ name: "labels" });
+    return navigateTo({ name: "factories" });
   }
 });

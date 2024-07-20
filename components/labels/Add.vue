@@ -160,7 +160,28 @@
                       </div>
                     </div>
                   </v-col>
-                  <v-col cols="12">
+                  <v-col cols="6">
+                    <div class="field_container">
+                      <div class="input_parent position-relative">
+                        <v-text-field
+                          rounded="lg"
+                          v-model="formData.reference"
+                          label="Reference"
+                          variant="outlined"
+                          :disabled="route.query.id"
+                          prependInnerIcon="mdi-counter"
+                          :error="v$.reference.$errors.length"
+                          :error-messages="
+                            v$.reference.$errors.length
+                              ? v$.reference.$errors[0].$message
+                              : ''
+                          "
+                        >
+                        </v-text-field>
+                      </div>
+                    </div>
+                  </v-col>
+                  <v-col cols="6">
                     <div class="field_container">
                       <div class="input_parent position-relative">
                         <v-text-field
@@ -271,12 +292,16 @@ const authModule = authStore();
 const labelsModule = labelStore();
 const { loggerData } = storeToRefs(authModule);
 
+// Init Router
+const route = useRoute();
+
 // Local Data
 const formData = ref({
   firstRow: [],
   middleRow: [],
   lastRow: [],
   labels: [],
+  reference: null,
 });
 
 const dataRoles = computed(() => {
@@ -284,6 +309,7 @@ const dataRoles = computed(() => {
     firstRow: { required },
     middleRow: { required },
     lastRow: { required },
+    reference: { required },
     labels: {
       required,
       $each: {
@@ -421,8 +447,10 @@ const submitData = async () => {
         middleRow: formData.value.middleRow,
         lastRow: formData.value.lastRow,
         labels: formData.value.labels,
+        reference: formData.value.reference,
         user: loggerData.value,
       };
+
       const res = await labelsModule.doAddLabel(data);
       if (res) {
         emits("viewData", res);
@@ -438,6 +466,7 @@ const submitData = async () => {
 // Hooks
 onMounted(() => {
   dialog.value = props.openPopup;
+  if (route.query.id) formData.value.reference = route.query.id;
 });
 </script>
 

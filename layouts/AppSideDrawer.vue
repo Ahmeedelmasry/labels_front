@@ -30,9 +30,9 @@
           <v-list-item
             style="padding: 10px 12px"
             prepend-icon="mdi-label-multiple-outline"
-            title="Labels"
-            value="labels"
-            :to="{ name: 'labels' }"
+            title="Factories"
+            value="factories"
+            :to="{ name: 'factories' }"
           >
           </v-list-item>
           <v-list-item

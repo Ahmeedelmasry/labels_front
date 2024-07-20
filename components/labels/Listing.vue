@@ -3,7 +3,11 @@
     <div
       class="d-flex justify-space-between align-center px-5 mt-10 py-5 bg-white mx-5"
     >
-      <h2 class="main_title">Labels</h2>
+      <h2 class="main_title">
+        <span>{{ $route.query.id }}</span>
+        <v-icon>mdi-chevron-right</v-icon>
+        Labels
+      </h2>
       <div class="d-flex align-center">
         <div v-print="printObj">
           <v-icon

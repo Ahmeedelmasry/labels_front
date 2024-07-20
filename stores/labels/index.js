@@ -5,6 +5,7 @@ import { mainStore } from "@/stores";
 export const labelStore = defineStore("labelStore", {
   state: () => ({
     labels: {},
+    labelsReferences: [],
   }),
   actions: {
     async doGetLabels(params) {
@@ -17,6 +18,18 @@ export const labelStore = defineStore("labelStore", {
         })
         .then((res) => {
           this.labels = res.data;
+        });
+    },
+    async doGetLabelsReferences(params) {
+      await axios()
+        .get(`${mainStore().apiURL}/labels/references`, {
+          params: { ...params },
+          headers: {
+            Authorization: `${useCookie("logger").value}`,
+          },
+        })
+        .then((res) => {
+          this.labelsReferences = res.data;
         });
     },
     async doAddLabel(data) {

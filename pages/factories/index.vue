@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard_tests_page mb-10">
-    <LabelsListing
-      :labels="labels"
+    <LabelsListReferences
+      :labelsReferences="labelsReferences"
       :loading="loading"
       @regetItems="getData($event)"
     />
@@ -15,26 +15,16 @@ import { storeToRefs } from "pinia";
 // Init STores
 const labelsModule = labelStore();
 
-// Init Router
-const route = useRoute();
-
 // Store Data
-const { labels } = storeToRefs(labelsModule);
+const { labelsReferences } = storeToRefs(labelsModule);
 
 // Local Data
 const loading = ref(true);
-const reference = ref(null);
 
 // Methods
-const getData = async (params = {}) => {
+const getData = async (e) => {
   loading.value = true;
-  if (route.query.id) {
-    reference.value = route.query.id;
-  }
-  await labelsModule.doGetLabels({
-    ...params,
-    reference: reference.value,
-  });
+  await labelsModule.doGetLabelsReferences(e);
   loading.value = false;
 };
 

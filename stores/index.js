@@ -52,5 +52,30 @@ export const mainStore = defineStore("mainStore", {
         });
       return result;
     },
+    async doDeleteItem() {
+      let result;
+      await axios()
+        .delete(`${this.apiURL}/${this.toDel.url}/${this.toDel._id || ""}`, {
+          params: { reference: this.toDel.ref || "" },
+          headers: {
+            Authorization: `${useCookie("logger").value}`,
+          },
+        })
+        .then((res) => {
+          result = true;
+          this.callResponse(
+            true,
+            this.toDel.reference
+              ? "Factory deleted successfully"
+              : res.data.message,
+            1
+          );
+        })
+        .catch((err) => {
+          result = false;
+          this.callResponse(true, err.response.data.message, 2);
+        });
+      return result;
+    },
   },
 });
